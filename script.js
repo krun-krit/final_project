@@ -25,13 +25,13 @@ function addAnimeToTable(anime){
   img.setAttribute('src', anime.image_url)
   img.height = 200
   img.width = 150
+  img.addEventListener('click', function(){
+    let confirmMsg = confrim(`Do you want add ${title} to your favorit list? `)
+    if(confirmMsg){
+        console.log(anime.results)
+    }
+  })
   display.appendChild(img)
-  // img.addEventListener('click', function(){
-  //   let confirmMsg = confrim(`Do you want add ${title} to your favorit list? `)
-  //   if(confirmMsg){
-
-  //   }
-  // })
 
   let displayBody = document.createElement('div')
   let title = document.createElement('h5')
