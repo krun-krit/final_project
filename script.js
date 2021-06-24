@@ -27,12 +27,12 @@ function addAnimeToTable(anime){
   img.setAttribute('src', anime.image_url)
   img.height = 200
   img.width = 150
-  // img.addEventListener('click', function(){
-  //   let confirmMsg = confrim(`Do you want add ${title} to your favorit list? `)
-  //   if(confirmMsg){
-  //       console.log(anime.results)
-  //   }
-  // })
+  img.addEventListener('click', function(){
+    let confirmMsg = confirm(`Do you want add ${anime.title} to your favorit list?`)
+    if(confirmMsg){
+        console.log(anime.title)
+    }
+  })
   display.appendChild(img)
 
   let displayBody = document.createElement('div')
@@ -51,4 +51,25 @@ function addAnimeList(animeList){
   for (anime of animeList){
       addAnimeToTable(anime) 
   }
+}
+
+function deleteAnime(id){
+  fetch(`https://api.jikan.moe/v3/search/anime?q=${id}`,{
+    method: 'DELETE'
+  }).then(response => {
+    if(response.status === 200){
+      return response.json()
+    }else{
+      throw Error(response.statusText)
+    }
+  }).then(data => {
+    alert('Do you want to delete this anime out of your list')
+    showAllAnime()
+  }).catch(error =>{
+    alert('Your input student id is not in the database')
+  })
+}
+
+function addAni(){
+  fetch(``)
 }
