@@ -25,12 +25,14 @@ function addAnimeToTable(anime){
   display.classList.add("col-3")
   let img = document.createElement('img')
   img.setAttribute('src', anime.image_url)
+  img.classList.add('img-thumbnail')
   img.height = 200
   img.width = 150
   img.addEventListener('click', function(){
     let confirmMsg = confirm(`Do you want add ${anime.title} to your favorit list?`)
     if(confirmMsg){
         console.log(anime.title)
+        addAni(anime)
     }
   })
   display.appendChild(img)
@@ -70,6 +72,31 @@ function deleteAnime(id){
   })
 }
 
-function addAni(){
-  fetch(``)
+function addAni(anime){
+  let id = {}
+  id.id = 632110362
+  id.movie = anime
+  console.log(id)
+  fetch('https://se104-project-backend.du.r.appspot.com/movies', {
+    method: 'POST',
+    headers:{
+        'Content-Type': 'application/json'
+    },
+    body:JSON.stringify(id)
+  }).then(response => {
+    if(response.status === 200){
+        return response.json()
+    }else{
+        throw Error(response.statusText)    
+    }
+  }).then(data => {
+    console.log('success', data)
+    showAllAnime()
+  })
 }
+
+function showList(){
+  
+}
+
+
