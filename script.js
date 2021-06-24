@@ -1,4 +1,5 @@
 var outputTBody = document.getElementById('outputTBody')
+var outputFav = document.getElementById('outputFav')
 
 function showAllAnime(title){
   fetch(`https://api.jikan.moe/v3/search/anime?q=${title}`)
@@ -60,7 +61,6 @@ function addAni(anime){
   let id = {}
   id.id = 632110362
   id.movie = anime
-  console.log(id)
   fetch('https://se104-project-backend.du.r.appspot.com/movies', {
     method: 'POST',
     headers:{
@@ -74,18 +74,20 @@ function addAni(anime){
         throw Error(response.statusText)    
     }
   }).then(data => {
-    console.log('success', data)
-    showAllAnime()
+    hideAll()
+    showFavList()
+    outputFav.style.display = 'block'
   })
 }
 
-function showFavList(anime){
+function showFavList(){
     fetch('https://se104-project-backend.du.r.appspot.com/movies/632110362')
     .then((response) => {
         return response.json()
     }).then ((anime) => {
-        console.log(anime)
+        hideAll()
         addAnimeListFav(anime)
+        outputFav.style.display = 'block'
     })
 }
 
@@ -96,44 +98,67 @@ function addAnimeListFav(animeListFav){
   }
 }
 
-function addAniFavToDB(anime){
+function addAniFavToDB(animeFav){
   const favList = document.getElementById('favList')
   let disFav = document.createElement('div')
   disFav.classList.add("card")
   disFav.classList.add("col-3")
   let img = document.createElement('img')
-  img.setAttribute('src', anime.image_url)
+  img.setAttribute('src', animeFav.image_url)
   img.classList.add('img-thumbnail')
   img.height = 200
   img.width = 150
-  disFav.appendChild(img)
 
   let disFavBody = document.createElement('div')
   let titleFav = document.createElement('h5')
-  titleFav.innerHTML = anime.title
+  titleFav.innerHTML = animeFav.title
   let detailFav = document.createElement('p')
-  detailFav.innerHTML = anime.synopsis
+  detailFav.innerHTML = animeFav.synopsis
   disFavBody.appendChild(titleFav)
   disFavBody.appendChild(detailFav)
+  disFav = document.createElement('td')
+  let buttonDel = document.createElement('button')
+  buttonDel.classList.add('btn')
+  buttonDel.classList.add('btn-danger')
+  buttonDel.setAttribute('type', 'button')
+  buttonDel.innerText = 'Delete'
+  buttonDel.addEventListener('click', function() {
+    let confirmMsg = confirm('Do you want to delete this anime')
+    if(confirmMsg){
+          deleteAnime(animeFav)
+      }
+  })
+  let buttonDetail = document.createElement('td')
+  buttonDetail.classList.add('btn')
+  buttonDetail.classList.add('btn-success')
+  buttonDetail.setAttribute('type', 'button')
+  buttonDetail.innerText = 'Detail'
+  buttonDetail.addEventListener('click', function(){
+      hideAll()
+      showDC()
+
+  })
+  disFav.appendChild(img)
+  disFavBody.appendChild(buttonDetail)
+  disFavBody.appendChild(buttonDel)
   disFav.appendChild(disFavBody)
   favList.appendChild(disFav)
 }
 
-var favList = document.getElementById('favList')
 
-function hideAllList(){
+function hideAll(){
   outputTBody.style.display = 'none'
+  outputFav.style.display = 'none'
 }
 
 
-
 document.getElementById('favoriteAni').addEventListener('click', (event) =>{
-  hideAllList()
   showFavList()
 })
 
 function deleteAnime(id){
-  fetch('https://se104-project-backend.du.r.appspot.com/movies/632110362',{
+  console.log(id.title)
+  fetch(`https://se104-project-backend.du.r.appspot.com/movie?id=632110362&&movieId=${id.id}`,{
     method: 'DELETE'
   }).then(response => {
     if(response.status === 200){
@@ -142,9 +167,39 @@ function deleteAnime(id){
       throw Error(response.statusText)
     }
   }).then(data => {
-    alert('Do you want to delete this anime out of your list')
-    showAllAnime()
+    alert('Now we delet this anime.')
+    showFavList()
   }).catch(error =>{
     alert('Your input student id is not in the database')
   })
+}
+
+function showDC(shoAni){
+  fetch(`https://se104-project-backend.du.r.appspot.com/movie/632110362/${shoAni}`)
+  .then((response) => {
+    return response.json()
+}).then ((shoAni) => {
+    addShoAni(shoAni)
+})
+}
+
+function addShoAni(AniDe){
+  const aniDetail = document.getElementById('aniDetail')
+  let disDetail = document.createElement('div')
+  let img = document.createElement('img')
+  img.setAttribute('src', aniDe.image_url)
+  img.classList.add('img-thumbnail')
+  img.height = 200
+  img.width = 150
+
+  let deBody = document.createElement('div')
+  let titleDe = document.createElement('h4')
+  titleDe.innerHTML = aniDe.title
+  let detailDe = document.createElement('p')
+  detailDe.innerHTML = aniDe.synopsis
+  deBody.appendChild(titleDe)
+  deBody.appendChild(detailDe)
+  aniDetail.appendChild(img)
+  aniDetail.appendChild(deBody)
+
 }
