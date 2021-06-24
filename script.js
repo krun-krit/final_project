@@ -1,5 +1,6 @@
 var outputTBody = document.getElementById('outputTBody')
 var outputFav = document.getElementById('outputFav')
+var aniDetail = document.getElementById('aniDetail')
 
 function showAllAnime(title){
   fetch(`https://api.jikan.moe/v3/search/anime?q=${title}`)
@@ -134,8 +135,7 @@ function addAniFavToDB(animeFav){
   buttonDetail.setAttribute('type', 'button')
   buttonDetail.innerText = 'Detail'
   buttonDetail.addEventListener('click', function(){
-      hideAll()
-      showDC()
+      showDC(animeFav)
 
   })
   disFav.appendChild(img)
@@ -149,6 +149,7 @@ function addAniFavToDB(animeFav){
 function hideAll(){
   outputTBody.style.display = 'none'
   outputFav.style.display = 'none'
+  aniDetail.style.display = 'none'
 }
 
 
@@ -157,7 +158,6 @@ document.getElementById('favoriteAni').addEventListener('click', (event) =>{
 })
 
 function deleteAnime(id){
-  console.log(id.title)
   fetch(`https://se104-project-backend.du.r.appspot.com/movie?id=632110362&&movieId=${id.id}`,{
     method: 'DELETE'
   }).then(response => {
@@ -175,15 +175,18 @@ function deleteAnime(id){
 }
 
 function showDC(shoAni){
-  fetch(`https://se104-project-backend.du.r.appspot.com/movie/632110362/${shoAni}`)
-  .then((response) => {
+  fetch(`https://se104-project-backend.du.r.appspot.com/movie/632110362/${shoAni.id}`)
+  .then(response => {
     return response.json()
-}).then ((shoAni) => {
-    addShoAni(shoAni)
+}).then (data => {
+    aniDetail.innerHTML = ''
+    hideAll()
+    addShoAni(data)
+    aniDetail.style.display = 'block'
 })
 }
 
-function addShoAni(AniDe){
+function addShoAni(aniDe){
   const aniDetail = document.getElementById('aniDetail')
   let disDetail = document.createElement('div')
   let img = document.createElement('img')
