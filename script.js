@@ -32,7 +32,6 @@ function addAnimeToTable(anime){
   img.addEventListener('click', function(){
     let confirmMsg = confirm(`Do you want add ${anime.title} to your favorit list?`)
     if(confirmMsg){
-        console.log(anime.title)
         addAni(anime)
     }
   })
@@ -56,22 +55,6 @@ function addAnimeList(animeList){
   }
 }
 
-function deleteAnime(id){
-  fetch(`https://api.jikan.moe/v3/search/anime?q=${id}`,{
-    method: 'DELETE'
-  }).then(response => {
-    if(response.status === 200){
-      return response.json()
-    }else{
-      throw Error(response.statusText)
-    }
-  }).then(data => {
-    alert('Do you want to delete this anime out of your list')
-    showAllAnime()
-  }).catch(error =>{
-    alert('Your input student id is not in the database')
-  })
-}
 
 function addAni(anime){
   let id = {}
@@ -96,13 +79,44 @@ function addAni(anime){
   })
 }
 
-function showList(anime){
+function showFavList(anime){
     fetch('https://se104-project-backend.du.r.appspot.com/movies/632110362')
     .then((response) => {
         return response.json()
     }).then ((anime) => {
-        addAnimeList(anime.results)
+        console.log(anime)
+        addAnimeListFav(anime)
     })
+}
+
+function addAnimeListFav(animeListFav){
+  favList.innerHTML = ''
+  for (animeFav of animeListFav){
+      addAniFavToDB(animeFav) 
+  }
+}
+
+function addAniFavToDB(anime){
+  const favList = document.getElementById('favList')
+  let disFav = document.createElement('div')
+  disFav.classList.add("card")
+  disFav.classList.add("col-3")
+  let img = document.createElement('img')
+  img.setAttribute('src', anime.image_url)
+  img.classList.add('img-thumbnail')
+  img.height = 200
+  img.width = 150
+  disFav.appendChild(img)
+
+  let disFavBody = document.createElement('div')
+  let titleFav = document.createElement('h5')
+  titleFav.innerHTML = anime.title
+  let detailFav = document.createElement('p')
+  detailFav.innerHTML = anime.synopsis
+  disFavBody.appendChild(titleFav)
+  disFavBody.appendChild(detailFav)
+  disFav.appendChild(disFavBody)
+  favList.appendChild(disFav)
 }
 
 var favList = document.getElementById('favList')
@@ -111,12 +125,26 @@ function hideAllList(){
   outputTBody.style.display = 'none'
 }
 
-function showFavList(anime){
-  const favList = document.getElementById('favList')
-  let disFav = document.getElementById('showList')
-}
+
 
 document.getElementById('favoriteAni').addEventListener('click', (event) =>{
   hideAllList()
+  showFavList()
 })
 
+function deleteAnime(id){
+  fetch('https://se104-project-backend.du.r.appspot.com/movies/632110362',{
+    method: 'DELETE'
+  }).then(response => {
+    if(response.status === 200){
+      return response.json()
+    }else{
+      throw Error(response.statusText)
+    }
+  }).then(data => {
+    alert('Do you want to delete this anime out of your list')
+    showAllAnime()
+  }).catch(error =>{
+    alert('Your input student id is not in the database')
+  })
+}
