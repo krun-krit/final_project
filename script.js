@@ -8,12 +8,9 @@ function showAllAnime(title){
       return response.json()
   }).then ((anime) => {
       addAnimeList(anime.results)
+      hideAll()
       outputTBody.style.display = 'block'
   })
-}
-
-function onLoad(){
-  // showAllAnime()
 }
 
 function clicky(){
@@ -167,7 +164,7 @@ function deleteAnime(id){
       throw Error(response.statusText)
     }
   }).then(data => {
-    alert('Now we delet this anime.')
+    alert('Now we delete this anime.')
     showFavList()
   }).catch(error =>{
     alert('Your input student id is not in the database')
@@ -188,7 +185,7 @@ function showDC(shoAni){
 
 function addShoAni(aniDe){
   const aniDetail = document.getElementById('aniDetail')
-  let disDetail = document.createElement('div')
+  let disDetail = document.createElement('row')
   let img = document.createElement('img')
   img.setAttribute('src', aniDe.image_url)
   img.classList.add('img-thumbnail')
@@ -200,8 +197,20 @@ function addShoAni(aniDe){
   titleDe.innerHTML = aniDe.title
   let detailDe = document.createElement('p')
   detailDe.innerHTML = aniDe.synopsis
+  let typeDe = document.createElement('p')
+  typeDe.innerHTML = aniDe.type
+  let epDe = document.createElement('p')
+  epDe.innerHTML = aniDe.episodes
+  let scDe = document.createElement('p')
+  scDe.innerHTML = aniDe.score
+  let ratedDe = document.createElement('p')
+  ratedDe.innerHTML = aniDe.rated
   deBody.appendChild(titleDe)
   deBody.appendChild(detailDe)
+  deBody.appendChild(typeDe)
+  deBody.appendChild(epDe)
+  deBody.appendChild(scDe)
+  deBody.appendChild(ratedDe)
   aniDetail.appendChild(img)
   aniDetail.appendChild(deBody)
 
