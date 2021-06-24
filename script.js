@@ -1,4 +1,4 @@
-var tBody = document.getElementById('tBody')
+var outputTBody = document.getElementById('outputTBody')
 
 function showAllAnime(title){
   fetch(`https://api.jikan.moe/v3/search/anime?q=${title}`)
@@ -6,6 +6,7 @@ function showAllAnime(title){
       return response.json()
   }).then ((anime) => {
       addAnimeList(anime.results)
+      outputTBody.style.display = 'block'
   })
 }
 
@@ -95,8 +96,27 @@ function addAni(anime){
   })
 }
 
-function showList(){
-  
+function showList(anime){
+    fetch('https://se104-project-backend.du.r.appspot.com/movies/632110362')
+    .then((response) => {
+        return response.json()
+    }).then ((anime) => {
+        addAnimeList(anime.results)
+    })
 }
 
+var favList = document.getElementById('favList')
+
+function hideAllList(){
+  outputTBody.style.display = 'none'
+}
+
+function showFavList(anime){
+  const favList = document.getElementById('favList')
+  let disFav = document.getElementById('showList')
+}
+
+document.getElementById('favoriteAni').addEventListener('click', (event) =>{
+  hideAllList()
+})
 
