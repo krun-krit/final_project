@@ -3,3 +3,16 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+tBody{
+    text-align: center;
+}
+
+.navbar{
+    height: 70px;
+}
+
+h3{
+    padding: 20px;
+}
+

@@ -2,6 +2,7 @@ var outputTBody = document.getElementById('outputTBody')
 var outputFav = document.getElementById('outputFav')
 var aniDetail = document.getElementById('aniDetail')
 
+
 function showAllAnime(title){
   fetch(`https://api.jikan.moe/v3/search/anime?q=${title}`)
   .then((response) => {
@@ -215,3 +216,5 @@ function addShoAni(aniDe){
   aniDetail.appendChild(deBody)
 
 }
+
+card.appendChild(buttonDetail)
