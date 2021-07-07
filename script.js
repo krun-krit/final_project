@@ -1,6 +1,7 @@
 var outputTBody = document.getElementById('outputTBody')
 var outputFav = document.getElementById('outputFav')
 var aniDetail = document.getElementById('aniDetail')
+var carouselExampleIndicators = document.getElementById('carouselExampleIndicators')
 
 
 function showAllAnime(title){
@@ -22,29 +23,32 @@ function clicky(){
 function addAnimeToTable(anime){
   const tBody = document.getElementById('tBody')
   let display = document.createElement('div')
-  display.classList.add("card")
-  display.classList.add("col-3")
   let img = document.createElement('img')
   img.setAttribute('src', anime.image_url)
   img.classList.add('img-thumbnail')
   img.height = 200
   img.width = 150
-  img.addEventListener('click', function(){
+
+  // let displayBody = document.createElement('div')
+  let title = document.createElement('h5')
+  title.innerHTML = anime.title
+  let detail = document.createElement('p')
+  detail.innerHTML = anime.synopsis
+  let buttonAdd = document.createElement('button')
+  buttonAdd.classList.add('btn')
+  buttonAdd.classList.add('btn-outline-success')
+  buttonAdd.setAttribute('type', 'button')
+  buttonAdd.innerText = 'ADD'
+  buttonAdd.addEventListener('click', function() {
     let confirmMsg = confirm(`Do you want add ${anime.title} to your favorit list?`)
     if(confirmMsg){
         addAni(anime)
     }
   })
   display.appendChild(img)
-
-  let displayBody = document.createElement('div')
-  let title = document.createElement('h5')
-  title.innerHTML = anime.title
-  let detail = document.createElement('p')
-  detail.innerHTML = anime.synopsis
-  displayBody.appendChild(title)
-  displayBody.appendChild(detail)
-  display.appendChild(displayBody)
+  display.appendChild(title)
+  display.appendChild(detail)
+  display.appendChild(buttonAdd)
   tBody.appendChild(display)
 }
 
@@ -100,8 +104,8 @@ function addAnimeListFav(animeListFav){
 function addAniFavToDB(animeFav){
   const favList = document.getElementById('favList')
   let disFav = document.createElement('div')
+  disFav.classList.add("col")
   disFav.classList.add("card")
-  disFav.classList.add("col-3")
   let img = document.createElement('img')
   img.setAttribute('src', animeFav.image_url)
   img.classList.add('img-thumbnail')
@@ -118,7 +122,7 @@ function addAniFavToDB(animeFav){
   disFav = document.createElement('td')
   let buttonDel = document.createElement('button')
   buttonDel.classList.add('btn')
-  buttonDel.classList.add('btn-danger')
+  buttonDel.classList.add('btn-outline-danger')
   buttonDel.setAttribute('type', 'button')
   buttonDel.innerText = 'Delete'
   buttonDel.addEventListener('click', function() {
@@ -129,7 +133,7 @@ function addAniFavToDB(animeFav){
   })
   let buttonDetail = document.createElement('td')
   buttonDetail.classList.add('btn')
-  buttonDetail.classList.add('btn-success')
+  buttonDetail.classList.add('btn-outline-success')
   buttonDetail.setAttribute('type', 'button')
   buttonDetail.innerText = 'Detail'
   buttonDetail.addEventListener('click', function(){
@@ -148,6 +152,7 @@ function hideAll(){
   outputTBody.style.display = 'none'
   outputFav.style.display = 'none'
   aniDetail.style.display = 'none'
+  carouselExampleIndicators.style.display = 'none'
 }
 
 
@@ -194,27 +199,59 @@ function addShoAni(aniDe){
   img.width = 150
 
   let deBody = document.createElement('div')
-  let titleDe = document.createElement('h4')
+  let titleDe = document.createElement('h3')
   titleDe.innerHTML = aniDe.title
+  let detailName = document.createElement('h4')
+  detailName.innerText = "Synopsis :"
   let detailDe = document.createElement('p')
   detailDe.innerHTML = aniDe.synopsis
+  let typeName = document.createElement('h4')
+  typeName.innerText = "Type :"
   let typeDe = document.createElement('p')
   typeDe.innerHTML = aniDe.type
+  let epName = document.createElement('h4')
+  epName.innerText = "Episodes :"
   let epDe = document.createElement('p')
   epDe.innerHTML = aniDe.episodes
+  let scName = document.createElement('h4')
+  scName.innerText = "Scores :"
   let scDe = document.createElement('p')
   scDe.innerHTML = aniDe.score
+  let ratedName = document.createElement('h4')
+  ratedName.innerText = "Rated :"
   let ratedDe = document.createElement('p')
   ratedDe.innerHTML = aniDe.rated
+  
+  let buttonBack = document.createElement('td')
+  buttonBack.classList.add('btn')
+  buttonBack.classList.add('btn-outline-secondary')
+  buttonBack.setAttribute('type', 'button')
+  buttonBack.innerText = 'BACK'
+  buttonBack.addEventListener('click', function(){
+      showFavList()
+
+  })
+
+  deBody.appendChild(typeName)
   deBody.appendChild(titleDe)
+  deBody.appendChild(detailName)
   deBody.appendChild(detailDe)
+  deBody.appendChild(typeName)
   deBody.appendChild(typeDe)
+  deBody.appendChild(epName)
   deBody.appendChild(epDe)
+  deBody.appendChild(scName)
   deBody.appendChild(scDe)
+  deBody.appendChild(ratedName)
   deBody.appendChild(ratedDe)
+  deBody.appendChild(buttonBack)
+  
   aniDetail.appendChild(img)
   aniDetail.appendChild(deBody)
 
 }
 
-card.appendChild(buttonDetail)
+
+
+
+

@@ -4,15 +4,53 @@ body{
     background-size: cover;
 }
 
-tBody{
-    text-align: center;
-}
 
 .navbar{
-    height: 70px;
+    height: 100px;
+    margin-bottom: 20px;
 }
 
-h3{
+.Page-Name{
     padding: 20px;
+}
+
+.btn{
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+    position:bottom;
+}
+
+.content-TBody{
+    max-width: 100%;
+    padding: 1rem 2rem;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 0.25rem;
+}
+
+.content-Fav{
+    max-width: 100%;
+    padding: 1rem 2rem;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 0.25rem;
+}
+
+.content-Detail{
+    max-width: 100%;
+    padding: 1rem 2rem;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 0.25rem;
+    margin-right: 20px;
+}
+
+p{
+    font-size: 18px;
 }
 
